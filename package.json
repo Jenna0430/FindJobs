@@ -1,0 +1,7 @@
+{
+  "name": "findjobs-monorepo",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ]
+}

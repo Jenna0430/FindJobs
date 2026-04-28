@@ -22,7 +22,8 @@
     "react-dom": "^19.2.4",
     "react-router-dom": "^7.13.2",
     "styled-components": "^6.3.12",
-    "typescript": "^6.0.2"
+    "typescript": "^6.0.2",
+    "@findjobs/shared-ui": "*"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
