@@ -8,7 +8,7 @@ interface ModalProps {
     onClose: () => void;
 }
 
-function ModalComponent({ open, message, onClose }: ModalProps): JSX.Element {
+export function ModalComponent({ open, message, onClose }: ModalProps): JSX.Element {
     return (
         <Modal
             open={open}
@@ -52,4 +52,3 @@ function ModalComponent({ open, message, onClose }: ModalProps): JSX.Element {
             </Modal>
     )
 }   
-export default ModalComponent;

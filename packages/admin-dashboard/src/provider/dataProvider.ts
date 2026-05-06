@@ -1,6 +1,6 @@
 import { supabaseDataProvider } from "ra-supabase";
 
-import supabase from "../SupabaseClient";
+import supabase from "../../../../SupabaseClient";
  
 // Attach the logged-in user's JWT to every request so RLS policies
 // see auth.uid() correctly. Without this, all requests use the anon

@@ -13,5 +13,9 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },
+    fs: {
+      // Allow Vite to serve files from the monorepo root
+      allow: ['../../'] 
+    }
   },
 });

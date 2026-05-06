@@ -1,4 +1,4 @@
-import supabase from "./SupabaseClient";
+import supabase from "../../../SupabaseClient";
 import { AuthProvider } from "react-admin";
 
 export const authProvider: AuthProvider = {

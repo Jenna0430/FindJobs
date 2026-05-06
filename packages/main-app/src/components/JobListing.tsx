@@ -1,23 +1,21 @@
-import { Card, CardContent, Button } from "@mui/material"
+import { Card, CardContent, Button, Box } from "@mui/material"
 import { useState } from "react"
 import { Link } from "react-router-dom";
 import type { JSX } from "react";
+import { useAuth } from "../context/AuthContext";
+import type { Job } from "@findjobs/shared-ui";
+
 
 interface JobListingProps {
-    job: {
-        id: number;
-        type: string;
-        title: string;
-        description: string;
-        salary: number | string;
-        location: string;
-    }
+    job: Job;
 }
-export type job = JobListingProps["job"];
+
 
 function JobListing({ job }: JobListingProps): JSX.Element {
 
+  const {  role } = useAuth();
   const [showFullDesc, setShowFullDesc] = useState(false);
+
 
   let description: string = job.description;
   if (!showFullDesc && description.length > 90) {
@@ -36,13 +34,17 @@ function JobListing({ job }: JobListingProps): JSX.Element {
         <h3>Salary: {job.salary}/Year</h3>
         <p>{job.location}</p>
 
+          {job.companies?.name && (
+            <p style={{ color: "gray", fontSize: "0.85rem" }}>
+              {job.companies.name}
+            </p>
+          )}
+
         <Link to={`/jobs/${job.id}`} style={{ textDecoration: "none" }}>
         <Button
           sx={{ backgroundColor: "var(--primary-color)", color: "white" }}
           variant="contained"
-        >
-          Apply Now
-        </Button>
+        >{role === "employer" ? "View Details" : "Apply Now"}</Button>
         </Link>
       </CardContent>
     </Card>

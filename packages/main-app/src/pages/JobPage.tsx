@@ -1,38 +1,49 @@
-import type { JSX } from "react";
-import { useParams, useLoaderData, Link } from "react-router-dom";
-import type { job } from "../components/JobListing";
-import { Button, Card, CardContent } from "@mui/material";
-import axiosInstance from "../api/AxiosInstance";
-import axios from "axios";
-
-interface JobPageProps extends job {
-  company: {
-    name: string;
-    description: string;
-    contactEmail: string;
-    contactPhone: string;
-    yearFounded: string;
-  };
-}
+import { type JSX } from "react";
+import { useLoaderData, Link, useNavigate } from "react-router-dom";
+import { Box, Button, Card, CardContent } from "@mui/material";
+import { useAuth } from "../context/AuthContext";
+import type { Job } from "@findjobs/shared-ui";
+import { deleteJob, getJobById, type ApiResult } from "../api";
 
 
 export const jobLoader = async ({ params }: 
-    { params?: { id: string }; }): Promise<job> => {
-    try {
-    const { data } = await axiosInstance.get<job>(`/jobs/${params?.id}`);
-    return data;  
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        throw new Error(`Axios error fetching job data: ${error.message}`);
-      } else {  
-        throw new Error("Error fetching job data");
-      }
+    { params?: { id: string }; }): Promise<Job> => {
+      const id = params?.id;
+        if (!id) throw new Error("No job ID provided.");
+      
+        const result: ApiResult<Job | null> = await getJobById(id);
+      
+        if (!result.success) throw new Error(result.error);
+        if (!result.data)    throw new Error("Job not found.");
+      
+        return result.data;
     } 
-  };
-
 
   function JobPage(): JSX.Element {
-    const job = useLoaderData() as JobPageProps;
+
+    const job = useLoaderData() as Job;
+    const { user, role } = useAuth();
+    const navigate = useNavigate();
+    const isOwner = user?.id === job.posted_by;
+
+    const handleApplyClick = (): void => {
+      if (!user) {
+        ()=> navigate("/login");
+        return;
+      }
+      navigate("/apply");
+    };
+
+    const handleDelete = async (): Promise<void> => {
+      const confirmDelete = window.confirm("Are you sure you want to delete this job?");
+      if (!confirmDelete) return;
+
+      const result = await deleteJob(job.id);
+      if(result.success) {
+          navigate("/jobs");
+      }
+     
+    }
 
     return (
       <div style={{ padding: "40px", backgroundColor: "var(--primary-color-light)", color: "var(--text-color)"}}>
@@ -60,23 +71,48 @@ export const jobLoader = async ({ params }:
           <Card sx={{ marginTop: "20px", width: "350px", boxShadow: "1px 1px 5px var(--primary-color)" }}>
             <CardContent>
               <h3>Company Info</h3>
-              <p>{job.company.name}</p>
-              <p>Founded: {job.company.yearFounded}</p>
-              <p>{job.company.description}</p>
+              <p>{job.companies?.name }</p>
+              <p>Founded: {job.companies?.year_founded}</p>
+              <p>{job.companies?.description}</p>
               <p>Contact Email: </p>
-              <p style={{ backgroundColor: "var(--primary-color-light)", padding: "10px" }}>{job.company.contactEmail}</p>
+              <p style={{ backgroundColor: "var(--primary-color-light)", padding: "10px" }}>{job.companies?.contact_email}</p>
               <p>Contact Phone: </p>
-              <p style={{ backgroundColor: "var(--primary-color-light)", padding: "10px" }}>{job.company.contactPhone}</p>
+              <p style={{ backgroundColor: "var(--primary-color-light)", padding: "10px" }}>{job.companies?.contact_phone}</p>
+              {role === "employer" ? "" : (
               <Link to="/apply">
-                <Button style={{ backgroundColor: "var(--primary-color)", color: "white", border: "none", padding: "10px 20px", marginTop: "10px" }}>
+                <Button 
+                onClick={handleApplyClick}
+                variant="contained"
+                style={{ backgroundColor: "var(--primary-color)", color: "white", border: "none", padding: "10px 20px", marginTop: "10px" }}>
                   Apply
                 </Button>
               </Link>
+              )}
+
+              {isOwner && (
+                 <Box sx={{ display: "flex", gap: "10px", marginTop: "20px" }}>
+                  <Button
+                    variant="contained"
+                    component={Link}
+                    to={`/edit-job/${job.id}`}
+                    sx={{ backgroundColor: "var(--primary-color)", color: "white" }}
+                  >
+                    Edit Job
+                  </Button>
+
+                  <Button
+                    variant="outlined"
+                    onClick={handleDelete}
+                    sx={{ borderColor: "red", color: "red" }}
+                  >
+                    Delete Job
+                  </Button>
+            </Box>
+              )}
             </CardContent>
           </Card>
         
         </div>
-        
        
         </div>
     );

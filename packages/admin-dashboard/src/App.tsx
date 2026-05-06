@@ -1,6 +1,6 @@
 import { MyLayout } from "./layout/Layout"
 import { Admin, Resource } from "react-admin";
-import { Dashboard, JobList, UserList, CompanyList, ApplicationList, LoginPage } from "./pages";
+import { Dashboard, JobList, UserList, CompanyList, ApplicationList, AdminLoginPage } from "./pages";
 import { dataProvider } from "./provider/dataProvider";
 import GroupIcon from "@mui/icons-material/Group";
 import WorkIcon from "@mui/icons-material/Work";
@@ -11,7 +11,7 @@ import { authProvider } from "./authProvider";
 
 export const App = () => 
 (
-    <Admin dataProvider={dataProvider} authProvider={authProvider} loginPage={LoginPage} layout={MyLayout} requireAuth>
+    <Admin dataProvider={dataProvider} authProvider={authProvider} loginPage={AdminLoginPage} layout={MyLayout} requireAuth>
          <Resource name="dashboard" list={Dashboard}/>
          <Resource name="jobs" list={JobList} icon={WorkIcon} />
          <Resource name="companies" list={CompanyList} icon={CompanyIcon} />

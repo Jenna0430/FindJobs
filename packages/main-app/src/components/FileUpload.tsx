@@ -1,8 +1,7 @@
 import { Button, Box, Typography } from "@mui/material";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
-import { useState } from "react";
-import type { JSX } from "react";
-import type { ChangeEvent } from "react";
+import type { JSX, ChangeEvent } from "react";
+
 
 
 interface FileUploadProps {
