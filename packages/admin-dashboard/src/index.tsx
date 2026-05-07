@@ -1,9 +1,11 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
+import '@findjobs/shared-ui/src/index.css';
+import { ThemeProvider } from '@mui/material/styles';
+import { theme } from '@findjobs/shared-ui';
 import { App } from "./App";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
+   <ThemeProvider theme={theme}>
     <App />
-  </React.StrictMode>,
+  </ThemeProvider>
 );

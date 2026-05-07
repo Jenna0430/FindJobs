@@ -1,5 +1,5 @@
 import { createRoot } from 'react-dom/client'
-import '../../../index.css'
+import '@findjobs/shared-ui/src/index.css';
 import App from './App.tsx'
 import { ThemeProvider } from '@mui/material/styles';
 import { theme } from '@findjobs/shared-ui';

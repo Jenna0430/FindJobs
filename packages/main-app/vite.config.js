@@ -18,4 +18,8 @@ export default defineConfig({
       allow: ['../../'] 
     }
   },
+  resolve: {
+    alias: {
+      "@findjobs/shared-ui": path.resolve(__dirname, "../shared-ui"),
+    }}
 });

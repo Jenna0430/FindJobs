@@ -5,7 +5,7 @@ import { dataProvider } from "./provider/dataProvider";
 import GroupIcon from "@mui/icons-material/Group";
 import WorkIcon from "@mui/icons-material/Work";
 import CompanyIcon from "@mui/icons-material/Business";
-import { authProvider } from "./authProvider";
+import { authProvider } from "./provider/authProvider";
 
 
 
