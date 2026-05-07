@@ -17,7 +17,7 @@ function HomePage(): JSX.Element {
     ):  role == "employer" ? (
       <Hero title="Post new jobs with us" subtitle="Tell us about your available job posts" />
     ) : (
-      <Hero title="Welocme to FindJobs website" subtitle="This platform provide job seekers and employers a way to find and post jobs" />
+      <Hero title="Welcome to FindJobs website" subtitle="This platform provides job seekers and employers a way to find and post jobs" />
     )
     }
       <HomeCards />

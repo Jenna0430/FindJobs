@@ -13,7 +13,8 @@
     "isolatedModules": true,
     "moduleDetection": "force",
     "noUncheckedIndexedAccess": true,
-    "verbatimModuleSyntax": true
+    "verbatimModuleSyntax": true,
+    "types": ["vite/client"]
   },
   "include": ["src"]
 }

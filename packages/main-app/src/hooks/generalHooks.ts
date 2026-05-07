@@ -4,12 +4,12 @@ import { getCompanyByOwner, createCompany, updateCompany, createJob, createAppli
 import type { CompanyFormData } from "../api/services/CompanyService";
 import type { CreateJobData } from "../api/services/JobService";
 import type { CreateApplicationData } from "../api/services/ApplicationService";
-import supabase from "../../../../SupabaseClient";
+import { supabase } from "../../SupabaseClient";
 import { useState, useEffect } from "react";
 import type { JobFilters } from "../api";
 
 
-export const useJobListings = (isHomePage?: boolean, filters?: JobFilters) => {
+export const useJobListings = (isHomePage?: boolean, filters?: JobFilters, options?:{enabled?: boolean}) => {
   const { user, role, loading: authLoading } = useAuth();
 
   const limit = isHomePage ? 3 : undefined;
@@ -29,7 +29,7 @@ export const useJobListings = (isHomePage?: boolean, filters?: JobFilters) => {
     },
 
     // don't fetch until auth is resolved
-    enabled: !authLoading,
+    enabled: !authLoading && (options?.enabled ?? true),
 
     // keep previous data visible while refetching
     placeholderData: (prev) => prev,

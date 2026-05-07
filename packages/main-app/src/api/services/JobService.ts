@@ -1,4 +1,4 @@
-import supabase from "../../../../../SupabaseClient";
+import { supabase } from "../../../SupabaseClient";
 import { ok, fail, parseError, DB_ERROR_CODES } from "../ApiResult";
 import type { ApiResult } from "../ApiResult";
 import type { Job } from "@findjobs/shared-ui";

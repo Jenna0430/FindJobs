@@ -3,8 +3,10 @@ import { HomePage,JobsPage, JobPage, AddJobPage, jobLoader, ApplyForJobPage, Com
 import MainLayout from "./layouts/MainLayout"
 import type { JSX } from "react"
 import { RequireAuth } from "./components/RequireAuth"
+import { AuthProvider } from "./context/AuthContext"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 
-
+const queryClient = new QueryClient()
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -36,7 +38,13 @@ const router = createBrowserRouter(
 )
 
 function App(): JSX.Element {
-  return <RouterProvider router={router}/>
+  return (
+    <QueryClientProvider client={queryClient}>
+    <AuthProvider>
+      <RouterProvider router={router}/>
+   </AuthProvider>
+   </QueryClientProvider>
+  )
 }
 
 export default App

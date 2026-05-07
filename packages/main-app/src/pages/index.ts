@@ -1,5 +1,5 @@
 export { default as HomePage } from "./HomePage";
-export { default as AboutPage } from "./CompanyProfilePage";
+export { default as CompanyProfilePage } from "./CompanyProfilePage";
 export { default as JobsPage } from "./JobsPage";
 export { default as JobPage } from "./JobPage";
 export { jobLoader } from "./JobPage";
